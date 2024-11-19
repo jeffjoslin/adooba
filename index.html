@@ -4,9 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello World</title>
+    <script>
+        async function fetchDynamicContent() {
+            // Check if the visitor is a bot
+            const userAgent = navigator.userAgent.toLowerCase();
+            if (userAgent.includes("bot") || userAgent.includes("crawl") || userAgent.includes("chatgpt")) {
+                try {
+                    // Fetch data from your dynamic API
+                    const response = await fetch("https://dynamic-api-3s4e.onrender.com/dynamic-content");
+                    const data = await response.json();
+                    
+                    // Update the dynamic-content section with the API response
+                    document.getElementById("dynamic-content").innerText = data.content;
+                } catch (error) {
+                    console.error("Error fetching dynamic content:", error);
+                }
+            }
+        }
+
+        // Call the function
+        fetchDynamicContent();
+    </script>
 </head>
 <body>
     <h1>Hello World</h1>
     <p>This is the static content visible to regular visitors.</p>
+    <p id="dynamic-content">Dynamic content will appear here if you're a bot.</p>
 </body>
 </html>
+
