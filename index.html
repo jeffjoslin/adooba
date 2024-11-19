@@ -5,17 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello World</title>
     <script>
-        async function fetchDynamicContent() {
-            try {
-                const response = await fetch("https://dynamic-api-3s4e.onrender.com/dynamic-content-html?query=example");
-                const content = await response.text();
-                document.getElementById("dynamic-content").innerHTML = content;
-            } catch (error) {
-                console.error("Error fetching dynamic content:", error);
-                document.getElementById("dynamic-content").innerHTML = "<p>Failed to load dynamic content.</p>";
+        (function() {
+            // Function to check if the visitor is a bot
+            function isBot() {
+                const userAgent = navigator.userAgent.toLowerCase();
+                return /bot|crawl|spider|chatgpt|google|bing|yandex|baidu/.test(userAgent);
             }
-        }
-        window.onload = fetchDynamicContent;
+
+            // Function to fetch dynamic content
+            async function fetchDynamicContent() {
+                try {
+                    const response = await fetch("https://dynamic-api-3s4e.onrender.com/dynamic-content-html?query=example");
+                    const content = await response.text();
+                    
+                    // Inject dynamic content into the page for bots
+                    const dynamicContainer = document.getElementById("dynamic-content");
+                    if (dynamicContainer) {
+                        dynamicContainer.innerHTML = content;
+                    }
+                } catch (error) {
+                    console.error("Error fetching dynamic content:", error);
+                    const dynamicContainer = document.getElementById("dynamic-content");
+                    if (dynamicContainer) {
+                        dynamicContainer.innerHTML = "<p>Failed to load dynamic content.</p>";
+                    }
+                }
+            }
+
+            // Run the detection and fetch dynamic content for bots
+            if (isBot()) {
+                fetchDynamicContent();
+            }
+        })();
     </script>
 </head>
 <body>
@@ -29,5 +50,3 @@
     </div>
 </body>
 </html>
-
-
