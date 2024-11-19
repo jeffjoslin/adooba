@@ -4,28 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello World</title>
-    <script>
-        async function fetchDynamicContent() {
-            try {
-                // Fetch data from the Render API
-                const response = await fetch("https://dynamic-api-3s4e.onrender.com/dynamic-content");
-                const data = await response.json();
-
-                // Update the dynamic-content section with the API response
-                document.getElementById("dynamic-content").innerText = data.content;
-            } catch (error) {
-                console.error("Error fetching dynamic content:", error);
-                document.getElementById("dynamic-content").innerText = "Failed to load dynamic content.";
-            }
-        }
-
-        // Call the function when the page loads
-        window.onload = fetchDynamicContent;
-    </script>
 </head>
 <body>
     <h1>Hello World</h1>
     <p>This is the static content visible to regular visitors.</p>
-    <p id="dynamic-content">Dynamic content will appear here.</p>
+    <p>The following section shows dynamic content for bots and visitors:</p>
+    
+    <!-- Embed dynamic content using iframe -->
+    <iframe 
+        src="https://dynamic-api-3s4e.onrender.com/dynamic-content" 
+        width="100%" 
+        height="150" 
+        frameborder="0">
+    </iframe>
 </body>
 </html>
